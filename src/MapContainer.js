@@ -45,13 +45,13 @@ export default class MapContainer extends Component {
 
   recenterMap() {
     const google = this.props;
-    const maps = google.maps;
     const {lat, lng} = this.state.currentLocation;
 
     if (this.map) {
       this.map.panTo({lat, lng})
     }
   }
+
 
   loadMap() {
     if(this.props && this.props.google) {
@@ -72,6 +72,39 @@ export default class MapContainer extends Component {
         zoom: this.props.zoom,
       })
       this.map = new maps.Map(node, mapConfig);
+
+
+      // set up events
+
+      // list of events to setup
+      const eventNames = ['click', 'dragend', 'ready'];
+
+
+      eventNames.forEach(e => {
+        this.map.addListener(e, this.handleEvent(e));
+      });
+
+      maps.event.trigger(this.map, 'ready');
+    }
+  }
+
+
+  // event handler function
+  handleEvent(eventNames) {
+    let timeout;
+    const handlerName = `on${camelize(eventNames)}`;
+
+    return (e) => {
+      // calls too many times so we need a delay
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      timeout = setTimeout(() => {
+        if (this.props[handlerName]) {
+          this.props[handlerName](this.props, this.map, e);
+        }
+      }, 0);
     }
   }
 
@@ -96,4 +129,18 @@ MapContainer.defaultProps = {
     lat: 80.133922,
     lng: -123.156502},
   useCurrentLocation: true
+}
+
+/*
+Map.propTypes = {
+  onMove: React.PropType.function() {
+    console.log("hi");
+  }
+}*/
+
+// for handlerNames
+const camelize = function(str) {
+  return str.split(' ').map(function(word){
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join('');
 }
