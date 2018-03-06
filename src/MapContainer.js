@@ -10,7 +10,10 @@ export default class MapContainer extends Component {
       currentLocation: {
         lat: lat,
         lng: lng
-      }
+      },
+      locations: [
+        {name: "location 1", location: {lat: 49.131409, lng: -123.154652}}
+      ]
     }
   }
 
@@ -85,6 +88,18 @@ export default class MapContainer extends Component {
       });
 
       maps.event.trigger(this.map, 'ready');
+
+
+      //add markers to map
+
+      this.state.locations.forEach( location => {
+        const marker = new google.maps.Marker({
+          position: {lat: location.location.lat, lng: location.location.lng},
+          map: this.map,
+          title: location.name
+        });
+      })
+
     }
   }
 
