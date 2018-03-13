@@ -25,20 +25,10 @@ class Form extends Component {
     event.preventDefault();
     const data = new FormData(event.target);
     var response;
-    //var queryData = stringifyFormData(data);
-    var queryData = JSON.stringify(
-      {
-        x: 1111,
-        y: 2222,
-        email: "someting@somemail",
-        rate: 3333,
-        isOccupied: 0,
-      },
-    );
 
+    console.log(data);
+    var queryData = stringifyFormData(data);
     console.log(queryData);
-    console.log(DB_URL);
-
 
     fetch(DB_URL, {
       method: 'POST',
@@ -58,8 +48,16 @@ class Form extends Component {
         <label htmlFor="email">Enter your email</label>
         <input id="email" name="email" type="text" />
 
+        {/* https://developers.google.com/maps/documentation/geocoding/intro
         <label htmlFor="address">Enter Address</label>
         <input id="address" name="address" type="text" />
+        */}
+
+        <label htmlFor="x">Enter x</label>
+        <input id="x" name="x" type="text" />
+
+        <label htmlFor="y">Enter y</label>
+        <input id="y" name="y" type="text" />
 
         <label htmlFor="rate">How much will your charge per hour?</label>
         <input id="rate" name="rate" type="text" />
@@ -75,6 +73,7 @@ function stringifyFormData(formData) {
   for (let key of formData.keys()) {
     data[key] = formData.get(key);
   }
+  data.isOccupied = 0;
   return JSON.stringify(data, null, 2);
 }
 
