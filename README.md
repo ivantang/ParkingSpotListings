@@ -4,10 +4,21 @@
 var locationSchema = new Schema({
   x: Number,
   y: Number,
-  owner: String,
+  email: String,
+  rate: Number,
   isOccupied: Boolean
 });
 ```
+
+## Backend Start
+
+`mongod`
+
+`node app.js`
+
+## Frontend
+
+`npm start`
 
 ```
 email: Text
