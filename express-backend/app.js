@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var routes = require('./routes');
 var bodyParser = require('body-parser');
+var test = 0;
 
 //CORS
 var allowCrossDomain = function(req, res, next) {
@@ -21,7 +22,12 @@ app.use('/', routes);
 
 
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/googlemapdb')
+//test or prod env
+if (test) {
+  mongoose.connect('mongodb://localhost/test')
+} else if (!test) {
+  mongoose.connect('mongodb://localhost/googlemapdb')
+}
 
 app.set('port', process.env.PORT || 3000);
 

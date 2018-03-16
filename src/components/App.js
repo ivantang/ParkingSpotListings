@@ -1,3 +1,5 @@
+//parent component
+
 import React, { Component } from 'react';
 import '../style/App.css';
 
@@ -21,7 +23,7 @@ class App extends Component {
   }
 }
 
-console.log(GoogleApiWrapper);
+//console.log(GoogleApiWrapper);
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyCV1LnHwZpz212WptE71SSlykHW1Sm3ksM',
