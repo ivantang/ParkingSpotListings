@@ -12,14 +12,9 @@ headers.append('Access-Control-Allow-Credentials', 'true');
 class Form extends Component {
   constructor(props) {
     super(props);
-    //this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-/*  propTypes: {
-    value: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-  };
-*/
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -40,6 +35,17 @@ class Form extends Component {
       body: queryData
     })
 
+    //get locations db data
+    fetch(DB_URL)
+      .then(response => {
+        response = response.json()
+          .then(data => {
+            //this.setState({userData : data});
+            response = data;
+          });
+        });
+
+    this.props.storeUserData(response);
   }
 
   render() {
@@ -51,6 +57,7 @@ class Form extends Component {
         {/* https://developers.google.com/maps/documentation/geocoding/intro
         <label htmlFor="address">Enter Address</label>
         <input id="address" name="address" type="text" />
+
         */}
 
         <label htmlFor="x">Enter x</label>
@@ -64,7 +71,7 @@ class Form extends Component {
 
         <button>Send data!</button>
       </form>
-    );
+    )
   }
 };
 

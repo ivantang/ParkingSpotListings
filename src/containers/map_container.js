@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
+import Form from '../components/form';
+import App from '../components/App';
 
 var debug = 0;
 const DB_URL = 'http://localhost:3000/locations'
@@ -11,6 +13,7 @@ export default class MapContainer extends Component {
     super(props);
 
     const {lat, lng} = this.props.initialCenter;
+
     this.state = {
       currentLocation: {
         lat: lat,
@@ -65,12 +68,14 @@ export default class MapContainer extends Component {
     if (prevState.currentLocation !== this.state.currentLocation) {
       this.recenterMap();
     }
+
+    this.reloadMarkers(this.props.userData);
+
   }
 
   recenterMap() {
     if(debug) console.log("recenterMap()");
 
-    const google = this.props;
     const {lat, lng} = this.state.currentLocation;
 
     //console.log(lat + " " + lng);
@@ -137,6 +142,18 @@ export default class MapContainer extends Component {
     }
   }
 
+  //refresh markers
+  reloadMarkers(userData) {
+    debugger;
+    const {google} = this.props;
+    this.state.userData.forEach( userData => {
+      const marker = new google.maps.Marker({
+        position: {lat: userData.x, lng: userData.y},
+        map: this.map,
+        title: userData.email
+      });
+    })
+  }
 
   // event handler function
   handleEvent(eventNames) {
@@ -179,6 +196,7 @@ MapContainer.defaultProps = {
     lng: -123.156502},
   useCurrentLocation: true
 }
+
 
 /*
 Map.propTypes = {

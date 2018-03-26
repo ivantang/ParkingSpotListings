@@ -11,13 +11,44 @@ import Form from './form';
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
 
-  render() {
+    debugger;
+
+    this.markerHandler = this.markerHandler.bind(this);
+
+    this.state = {
+      userData: [
+        {
+          //"_id": "",
+          //"isOccupied": false,
+          //"rate": 0,
+          //"email": "",
+          //"y": 0,
+          //"x": 0,
+          //"__v": 0
+        }
+      ]
+    }
+  }
+
+  markerHandler(data) {
+      this.setState({
+        userData: data
+    });
+  }
+
+  render: function() {
+    if ()
     return (
       <div className="App">
         <h1> holy moly finally </h1>
-        <Form />
-        <MapContainer google={this.props.google} />
+        <Form storeUserData={this.markerHandler}/>
+        <MapContainer
+          google={this.props.google}
+          userData={this.state.userData}
+        />
       </div>
     );
   }
