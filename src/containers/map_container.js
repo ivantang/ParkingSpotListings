@@ -1,9 +1,10 @@
 //component that renders the map objects
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import Form from '../components/form';
 
-var debug = 0;
+var debug = 1;
 const DB_URL = 'http://localhost:3000/locations'
 
 export default class MapContainer extends Component {
@@ -36,6 +37,15 @@ export default class MapContainer extends Component {
 
   componentDidMount(){
     if(debug) console.log("componentDidMount()");
+
+    // load initial state from db
+    fetch(DB_URL)
+      .then(response => {
+        response = response.json()
+          .then(data => {
+            this.setState({userData : data});
+          })
+      });
 
     // check browser's current location
     if (this.props.useCurrentLocation) {
@@ -104,36 +114,26 @@ export default class MapContainer extends Component {
       })
       this.map = new maps.Map(node, mapConfig);
 
-
-      //get locations db data
-      fetch(DB_URL)
-        .then(response => {
-          response = response.json()
-            .then(data => {
-              this.setState({userData : data});
-
-              //set up markers
-              this.state.userData.forEach( userData => {
-                const marker = new google.maps.Marker({
-                  position: {lat: userData.x, lng: userData.y},
-                  map: this.map,
-                  title: userData.email
-                });
-              })
-
-            })
+      //set up markers
+      this.state.userData.forEach( userData => {
+        const marker = new google.maps.Marker({
+          position: {lat: userData.x, lng: userData.y},
+          map: this.map,
+          title: userData.email
         });
+      })
 
       // set up events
       // list of events to setup
       const eventNames = ['click', 'dragend', 'ready'];
-
 
       eventNames.forEach(e => {
         this.map.addListener(e, this.handleEvent(e));
       });
 
       maps.event.trigger(this.map, 'ready');
+
+      this.forceUpdate();
     }
   }
 
@@ -142,6 +142,9 @@ export default class MapContainer extends Component {
   handleEvent(eventNames) {
     let timeout;
     const handlerName = `on${camelize(eventNames)}`;
+
+    if (debug) console.log("handleEvent" + handlerName);
+
 
     return (e) => {
       // calls too many times so we need a delay
@@ -158,6 +161,8 @@ export default class MapContainer extends Component {
   }
 
   render() {
+    if(debug) console.log("map_container render()");
+
     const style = {
       width: '100vw',
       height: '75vh'

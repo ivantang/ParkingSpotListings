@@ -2,6 +2,10 @@
 //http://jamesknelson.com/learn-raw-react-ridiculously-simple-forms/
 
 import React, { Component } from 'react';
+import MapContainer from '../containers/map_container';
+
+var debug = 1;
+
 
 // db variables
 const DB_URL = 'http://localhost:3000/locations'
@@ -22,14 +26,15 @@ class Form extends Component {
 */
 
   handleSubmit(event) {
+    if(debug) console.log("handlesubmit()");
     event.preventDefault();
     const data = new FormData(event.target);
-    var response;
 
-    console.log(data);
+    //console.log(data);
     var queryData = stringifyFormData(data);
-    console.log(queryData);
+    console.log("sending object to db" + queryData);
 
+    // posts userData object to db
     fetch(DB_URL, {
       method: 'POST',
       //mode: 'no-cors',
@@ -40,30 +45,35 @@ class Form extends Component {
       body: queryData
     })
 
+
   }
 
+  /* https://developers.google.com/maps/documentation/geocoding/intro
+  <label htmlFor="address">Enter Address</label>
+  <input id="address" name="address" type="text" />
+  */
+
   render() {
+    if(debug) console.log("form render()");
+
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="email">Enter your email</label>
-        <input id="email" name="email" type="text" />
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="email">Enter your email</label>
+          <input id="email" name="email" type="text" />
 
-        {/* https://developers.google.com/maps/documentation/geocoding/intro
-        <label htmlFor="address">Enter Address</label>
-        <input id="address" name="address" type="text" />
-        */}
+          <label htmlFor="x">Enter x</label>
+          <input id="x" name="x" type="text" />
 
-        <label htmlFor="x">Enter x</label>
-        <input id="x" name="x" type="text" />
+          <label htmlFor="y">Enter y</label>
+          <input id="y" name="y" type="text" />
 
-        <label htmlFor="y">Enter y</label>
-        <input id="y" name="y" type="text" />
+          <label htmlFor="rate">How much will your charge per hour?</label>
+          <input id="rate" name="rate" type="text" />
 
-        <label htmlFor="rate">How much will your charge per hour?</label>
-        <input id="rate" name="rate" type="text" />
-
-        <button>Send data!</button>
-      </form>
+          <button>Send data!</button>
+        </form>
+    </div>
     );
   }
 };
