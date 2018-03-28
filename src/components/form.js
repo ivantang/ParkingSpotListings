@@ -8,9 +8,9 @@ var debug = 1;
 
 
 // db variables
-const DB_URL = 'http://localhost:3000/locations'
+const DB_URL = 'http://localhost:4000/locations'
 let headers = new Headers();
-headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+headers.append('Access-Control-Allow-Origin', 'http://localhost:4000');
 headers.append('Access-Control-Allow-Credentials', 'true');
 
 class Form extends Component {

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import Form from '../components/form';
 
 var debug = 1;
-const DB_URL = 'http://localhost:3000/locations'
+const DB_URL = 'http://localhost:4000/locations'
 
 export default class MapContainer extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ export default class MapContainer extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     if(debug) console.log("componentDidMount()");
 
     // load initial state from db
