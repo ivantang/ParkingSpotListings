@@ -31,7 +31,10 @@ class App extends Component {
       <div className="App">
         <h1> holy moly finally </h1>
         <Form handleState={this.handleState} />
-        <MapContainer google={this.props.google} />
+        <MapContainer google={this.props.google}>
+          <Marker />
+          <Marker position={pos} />
+        </MapContainer>
       </div>
     );
   }

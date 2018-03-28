@@ -114,14 +114,14 @@ export default class MapContainer extends Component {
       })
       this.map = new maps.Map(node, mapConfig);
 
-      //set up markers
+      /*//set up markers
       this.state.userData.forEach( userData => {
         const marker = new google.maps.Marker({
           position: {lat: userData.x, lng: userData.y},
           map: this.map,
           title: userData.email
         });
-      })
+      })*/
 
       // set up events
       // list of events to setup
@@ -160,6 +160,21 @@ export default class MapContainer extends Component {
     }
   }
 
+  renderChildren() {
+    const {children} = this.props;
+
+    //if no children dont do anything
+    if(!children) return;
+
+    return React.Children.map(children, c => {
+      return React.cloneElement(c, {
+        map: this.map,
+        google: this.google,
+        mapCenter: this.state.currentLocation
+      });
+    })
+  }
+
   render() {
     if(debug) console.log("map_container render()");
 
@@ -171,6 +186,7 @@ export default class MapContainer extends Component {
     return (
       <div ref='map' style={style}>
         loading map...
+        {this.renderChildren()}
       </div>
     );
   }
