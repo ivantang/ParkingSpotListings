@@ -127,8 +127,8 @@ export default class MapContainer extends Component {
       // list of events to setup
       const eventNames = ['click', 'dragend', 'ready'];
 
-      eventNames.forEach(e => {
-        this.map.addListener(e, this.handleEvent(e));
+      eventNames.forEach(iterator => {
+        this.map.addListener(iterator, this.handleEvent(iterator));
       });
 
       maps.event.trigger(this.map, 'ready');
@@ -169,7 +169,7 @@ export default class MapContainer extends Component {
     return React.Children.map(children, c => {
       return React.cloneElement(c, {
         map: this.map,
-        google: this.google,
+        google: this.props.google,
         mapCenter: this.state.currentLocation
       });
     })

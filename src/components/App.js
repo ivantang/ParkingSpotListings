@@ -8,6 +8,7 @@ import { GoogleApiWrapper } from 'google-maps-react';
 
 import MapContainer from '../containers/map_container';
 import Form from './form';
+import Marker from './markers';
 
 var debug = 1;
 
@@ -26,6 +27,8 @@ class App extends Component {
 
   render() {
     if(debug) console.log("app render()");
+
+    const pos = {lat: 49.139259, lng: -123.149641}
 
     return (
       <div className="App">
