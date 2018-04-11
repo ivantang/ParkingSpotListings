@@ -133,30 +133,15 @@ export default class MapContainer extends Component {
 
       maps.event.trigger(this.map, 'ready');
 
-      this.forceUpdate();
+      //this.forceUpdate();
     }
   }
 
 
   // event handler function
-  handleEvent(eventNames) {
-    let timeout;
-    const handlerName = `on${camelize(eventNames)}`;
-
-    if (debug) console.log("handleEvent" + handlerName);
-
-
-    return (e) => {
-      // calls too many times so we need a delay
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
-      timeout = setTimeout(() => {
-        if (this.props[handlerName]) {
-          this.props[handlerName](this.props, this.map, e);
-        }
-      }, 0);
+  handleEvent(eventName) {
+    return (event) => {
+      console.log(eventName);
     }
   }
 

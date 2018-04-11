@@ -31,12 +31,18 @@ export default class Marker extends React.Component {
     })
   }
 
-  handleEvent(click) {
-    //handle click event
+  handleEvent(eventName) {
+    return (event) => {
+      console.log(eventName);
+    }
   }
 
-  handleEvent(mouseover) {
-    //handle mouseover
+
+  //removing the marker
+  componentWillUnmount() {
+    if (this.marker) {
+      this.marker.setMap(null);
+    }
   }
 
   render() {
