@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Form from '../components/form';
 
-var debug = 1;
-const DB_URL = 'http://localhost:4000/locations'
+var debug = 0;
 
 export default class MapContainer extends Component {
   constructor(props) {
@@ -38,21 +37,12 @@ export default class MapContainer extends Component {
   componentDidMount() {
     if(debug) console.log("componentDidMount()");
 
-    // load initial state from db
-    fetch(DB_URL)
-      .then(response => {
-        response = response.json()
-          .then(data => {
-            this.setState({userData : data});
-          })
-      });
-
     // check browser's current location
     if (this.props.useCurrentLocation) {
       if (navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
           const coords = pos.coords;
-          if(debug) console.log("current location =" + coords);
+          if(debug) console.log("current location =" + coords.latitude + coords.longitude);
           this.setState({
             currentLocation: {
               lat: coords.latitude,
@@ -104,7 +94,7 @@ export default class MapContainer extends Component {
 
       const {lat, lng} = this.state.currentLocation;
 
-      console.log(lat + " " + lng);
+      if(debug) console.log(lat + " " + lng);
 
       const mapConfig = Object.assign({}, {
         center: {
@@ -133,7 +123,7 @@ export default class MapContainer extends Component {
 
       maps.event.trigger(this.map, 'ready');
 
-      //this.forceUpdate();
+      this.forceUpdate();
     }
   }
 
@@ -142,6 +132,7 @@ export default class MapContainer extends Component {
   handleEvent(eventName) {
     return (event) => {
       console.log(eventName);
+      console.log(event);
     }
   }
 

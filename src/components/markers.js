@@ -4,22 +4,38 @@ export default class Marker extends React.Component {
 
   //markers updated when position or map is changed
   componentDidUpdate(prevProps) {
+    console.log('componentDidUpdate()');
     if ((this.props.map !== prevProps.map) || (this.props.position !== prevProps.position)) {
-      this.renderMarker();
+      this.componentWillReceiveProps();
     }
   }
 
-  renderMarker() {
-    let {
-      map, google, position, mapCenter
-    } = this.props;
+  componentWillReceiveProps() {
+    console.log('componentWillReceiveProps()');
+    if(this.props.map === undefined || this.props.google === undefined || this.props.position === undefined ) {
+      console.log("something is null");
+      return null;
+    }
+    this.renderMarker();
+  }
 
-    let pos = position || mapCenter;
+  renderMarker() {
+
+    let map = this.props.map;
+    let google = this.props.google;
+    let position = this.props.position;
+
+    let pos = position;
+
     position = new google.maps.LatLng(pos.lat, pos.lng);
+
+    var MarkerTitle = pos.lat.toString() + pos.lng.toString();
 
     const pref = {
       map: map,
-      position: position
+      position: position,
+      title: MarkerTitle
+      //icon: 'https://d30y9cdsu7xlg0.cloudfront.net/png/102549-200.png'
     };
     this.marker = new google.maps.Marker(pref);
 
@@ -29,6 +45,7 @@ export default class Marker extends React.Component {
     eventNames.forEach(iterator => {
       this.marker.addListener(iterator, this.handleEvent(iterator));
     })
+
   }
 
   handleEvent(eventName) {
@@ -36,7 +53,6 @@ export default class Marker extends React.Component {
       console.log(eventName);
     }
   }
-
 
   //removing the marker
   componentWillUnmount() {
@@ -51,4 +67,9 @@ export default class Marker extends React.Component {
     return null;
   }
 
+}
+
+Marker.propTypes = {
+  position: React.PropTypes.object,
+  map: React.PropTypes.object
 }
