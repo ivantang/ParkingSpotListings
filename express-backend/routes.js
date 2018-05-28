@@ -30,8 +30,8 @@ router.route('/locations')
 router.route('/locations')
   .post(function(req, res) {
     var location = new Location();
-    location.x = req.body.x;
-    location.y = req.body.y;
+    location.lat = req.body.lat;
+    location.lng = req.body.lng;
     location.email = req.body.email;
     location.rate = req.body.rate;
     location.isOccupied = req.body.isOccupied;

@@ -63,10 +63,10 @@ class Form extends Component {
           <input id="email" name="email" type="text" />
 
           <label htmlFor="x">Enter x</label>
-          <input id="x" name="x" type="text" />
+          <input id="lat" name="lat" type="text" />
 
           <label htmlFor="y">Enter y</label>
-          <input id="y" name="y" type="text" />
+          <input id="lng" name="lng" type="text" />
 
           <label htmlFor="rate">How much will your charge per hour?</label>
           <input id="rate" name="rate" type="text" />
