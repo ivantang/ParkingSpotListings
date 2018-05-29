@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 
+var markerArray = [];
+
 export default class Markers extends React.Component {
+
+  // constructor(props) {
+  //   super(props);
+  //
+  //   this.componentWillUnmount = this.componentWillUnmount.bind(this);
+  // }
 
   //markers updated when position or map is changed
   componentDidUpdate(prevProps) {
@@ -18,7 +26,8 @@ export default class Markers extends React.Component {
 
   renderMarkers() {
 
-    console.log(this.props);
+    //console.log(this.props);
+    this.removeAllMarkers();
 
     this.props.position.forEach(position => {
 
@@ -37,13 +46,8 @@ export default class Markers extends React.Component {
         //icon: 'https://d30y9cdsu7xlg0.cloudfront.net/png/102549-200.png'
       };
       const marker = new google.maps.Marker(pref);
-      console.log(marker);
 
-
-      this.markers = [];
-      this.markers.push(marker);
-
-      console.log(this.markers);
+      markerArray.push(marker);
 
       //create marker events
       const eventNames = ['click', 'mouseover'];
@@ -64,9 +68,12 @@ export default class Markers extends React.Component {
   }
 
   //removing the marker
-  componentWillUnmount() {
-    if (this.markers) {
-      this.markers.setMap(null);
+  removeAllMarkers() {
+    if (markerArray) {
+      markerArray.forEach(marker => {
+          marker.setMap(null);
+      })
+      markerArray.length = 0;
     }
   }
 

@@ -19,6 +19,7 @@ class App extends Component {
     super(props);
 
     this.handleState = this.handleState.bind(this);
+    this.updateStateFromDB = this.updateStateFromDB.bind(this);
 
     this.state = {
       markers: [
@@ -41,21 +42,22 @@ class App extends Component {
 
   componentDidMount() {
     this.updateStateFromDB();
-    console.log("userData");
-    console.log(this.state.userData);
+    //console.log("userData");
+    //console.log(this.state.userData);
   }
 
   handleState(data) {
     if (debug) console.log("handleState()");
+    data.lat = parseFloat(data.lat);
+    data.lng = parseFloat(data.lng)
 
     this.state.userData.push(data);
 
     this.setState({userData: data});
-    //this.forceUpdate();
+    console.log(this.state);
   }
 
   updateStateFromDB(){
-    // load initial state from db
     fetch(DB_URL)
       .then(response => {
         response = response.json()
@@ -71,7 +73,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1> holy moly finally </h1>
-        <Form handleState={this.handleState} />
+        <Form handleState={this.updateStateFromDB} />
         <MapContainer google={this.props.google}>
           <Markers />
           <Markers position={this.state.userData} />
