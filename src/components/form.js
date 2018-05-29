@@ -16,7 +16,7 @@ headers.append('Access-Control-Allow-Credentials', 'true');
 class Form extends Component {
   constructor(props) {
     super(props);
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 /*  propTypes: {
@@ -44,7 +44,8 @@ class Form extends Component {
       },
       body: queryData
     })
-
+    .then( () => this.props.handleState() );
+      //this.props.handleState(JSON.parse(queryData));
 
   }
 
@@ -63,10 +64,10 @@ class Form extends Component {
           <input id="email" name="email" type="text" />
 
           <label htmlFor="x">Enter x</label>
-          <input id="x" name="x" type="text" />
+          <input id="lat" name="lat" type="number" step="0.00000001"/>
 
           <label htmlFor="y">Enter y</label>
-          <input id="y" name="y" type="text" />
+          <input id="lng" name="lng" type="number" step="0.00000001"/>
 
           <label htmlFor="rate">How much will your charge per hour?</label>
           <input id="rate" name="rate" type="text" />

@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Form from '../components/form';
 
-var debug = 1;
-const DB_URL = 'http://localhost:4000/locations'
+var debug = 0;
 
 export default class MapContainer extends Component {
   constructor(props) {
@@ -38,21 +37,12 @@ export default class MapContainer extends Component {
   componentDidMount() {
     if(debug) console.log("componentDidMount()");
 
-    // load initial state from db
-    fetch(DB_URL)
-      .then(response => {
-        response = response.json()
-          .then(data => {
-            this.setState({userData : data});
-          })
-      });
-
     // check browser's current location
     if (this.props.useCurrentLocation) {
       if (navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
           const coords = pos.coords;
-          if(debug) console.log("current location =" + coords);
+          if(debug) console.log("current location =" + coords.latitude + coords.longitude);
           this.setState({
             currentLocation: {
               lat: coords.latitude,
@@ -104,7 +94,7 @@ export default class MapContainer extends Component {
 
       const {lat, lng} = this.state.currentLocation;
 
-      console.log(lat + " " + lng);
+      if(debug) console.log(lat + " " + lng);
 
       const mapConfig = Object.assign({}, {
         center: {
@@ -114,21 +104,21 @@ export default class MapContainer extends Component {
       })
       this.map = new maps.Map(node, mapConfig);
 
-      //set up markers
+      /*//set up markers
       this.state.userData.forEach( userData => {
         const marker = new google.maps.Marker({
           position: {lat: userData.x, lng: userData.y},
           map: this.map,
           title: userData.email
         });
-      })
+      })*/
 
       // set up events
       // list of events to setup
       const eventNames = ['click', 'dragend', 'ready'];
 
-      eventNames.forEach(e => {
-        this.map.addListener(e, this.handleEvent(e));
+      eventNames.forEach(iterator => {
+        this.map.addListener(iterator, this.handleEvent(iterator));
       });
 
       maps.event.trigger(this.map, 'ready');
@@ -139,25 +129,26 @@ export default class MapContainer extends Component {
 
 
   // event handler function
-  handleEvent(eventNames) {
-    let timeout;
-    const handlerName = `on${camelize(eventNames)}`;
-
-    if (debug) console.log("handleEvent" + handlerName);
-
-
-    return (e) => {
-      // calls too many times so we need a delay
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
-      timeout = setTimeout(() => {
-        if (this.props[handlerName]) {
-          this.props[handlerName](this.props, this.map, e);
-        }
-      }, 0);
+  handleEvent(eventName) {
+    return (event) => {
+      console.log(eventName);
+      console.log(event);
     }
+  }
+
+  renderChildren() {
+    const {children} = this.props;
+
+    //if no children dont do anything
+    if(!children) return;
+
+    return React.Children.map(children, c => {
+      return React.cloneElement(c, {
+        map: this.map,
+        google: this.props.google,
+        mapCenter: this.state.currentLocation
+      });
+    })
   }
 
   render() {
@@ -171,6 +162,7 @@ export default class MapContainer extends Component {
     return (
       <div ref='map' style={style}>
         loading map...
+        {this.renderChildren()}
       </div>
     );
   }
