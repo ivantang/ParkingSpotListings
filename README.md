@@ -32,19 +32,19 @@ isoccupied
 ## Flow
 
 ###User lists a location
-User Opens app
-(taken to log in screen using oauth to Google) TODO
-User is taken to map and form
-User clicks on map, marker appears and lat long sent to lat long in form
-User enters the rest of the information and presses List
-Location is store on DB
+* User Opens app
+* (taken to log in screen using oauth to Google) TODO
+* User is taken to map and form
+* User clicks on map, marker appears and lat long sent to lat long in form
+* User enters the rest of the information and presses List
+* Location is store on DB
 
 ###User picks a location
-User opens app
-(taken to log in screen using oauth to Google) TODO
-User is taken to map and form
-User clicks on marker and details are shown
-User clicks on checkout
+* User opens app
+* (taken to log in screen using oauth to Google) TODO
+* User is taken to map and form
+* User clicks on marker and details are shown
+* User clicks on checkout
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
