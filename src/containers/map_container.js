@@ -15,22 +15,7 @@ export default class MapContainer extends Component {
       currentLocation: {
         lat: lat,
         lng: lng
-      },
-      markers: [
-        {name: "My Parking Spot", location: {lat: 49.139259, lng: -123.149641} },
-        {name: "Friends Parking Spot", location: {lat: 49.14, lng: -123.15} }
-      ],
-      userData: [
-        {
-          //"_id": "",
-          //"isOccupied": false,
-          //"rate": 0,
-          //"email": "",
-          //"y": 0,
-          //"x": 0,
-          //"__v": 0
-        }
-      ]
+      }
     }
   }
 
@@ -80,7 +65,6 @@ export default class MapContainer extends Component {
     }
   }
 
-
   loadMap() {
     if(debug) console.log("loadMap()");
 
@@ -104,15 +88,6 @@ export default class MapContainer extends Component {
       })
       this.map = new maps.Map(node, mapConfig);
 
-      /*//set up markers
-      this.state.userData.forEach( userData => {
-        const marker = new google.maps.Marker({
-          position: {lat: userData.x, lng: userData.y},
-          map: this.map,
-          title: userData.email
-        });
-      })*/
-
       // set up events
       // list of events to setup
       const eventNames = ['click', 'dragend', 'ready'];
@@ -127,12 +102,19 @@ export default class MapContainer extends Component {
     }
   }
 
-
   // event handler function
   handleEvent(eventName) {
     return (event) => {
-      console.log(eventName);
-      console.log(event);
+      //console.log(eventName);
+      //console.log(event);
+
+      if (eventName === 'click') {
+        let data = {"lat": event.latLng.lat(), "lng":event.latLng.lng()}
+        //console.log(data);
+
+        this.props.formLatLng(data);
+      }
+
     }
   }
 

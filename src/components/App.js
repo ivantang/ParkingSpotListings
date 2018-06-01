@@ -18,14 +18,11 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.handleState = this.handleState.bind(this);
+    this.handleStateFormLatLng = this.handleStateFormLatLng.bind(this);
     this.updateStateFromDB = this.updateStateFromDB.bind(this);
 
     this.state = {
-      markers: [
-        {email: "My Parking Spot", location: {lat: 49.15, lng: -123.16} },
-        {email: "Friends Parking Spot", location: {lat: 49.14, lng: -123.15} }
-      ],
+      formLatLng: {"lat": 0, "lng": 0}, //this is for the latlnt in form field
       userData: [
         {
           //"_id": "",
@@ -46,15 +43,9 @@ class App extends Component {
     //console.log(this.state.userData);
   }
 
-  handleState(data) {
-    if (debug) console.log("handleState()");
-    data.lat = parseFloat(data.lat);
-    data.lng = parseFloat(data.lng)
-
-    this.state.userData.push(data);
-
-    this.setState({userData: data});
-    console.log(this.state);
+  handleStateFormLatLng(data) {
+    this.setState({formLatLng: data});
+    console.log(this.state.formLatLng);
   }
 
   updateStateFromDB(){
@@ -72,9 +63,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1> holy moly finally </h1>
-        <Form handleState={this.updateStateFromDB} />
-        <MapContainer google={this.props.google}>
+        <h1> Parking Space Share </h1>
+        <Form
+          handleState={this.updateStateFromDB}
+          formInitValue={this.state.formLatLng}
+         />
+        <MapContainer
+          google={this.props.google}
+          formLatLng={this.handleStateFormLatLng}>
           <Markers />
           <Markers position={this.state.userData} />
         </MapContainer>

@@ -12,13 +12,16 @@ export default class Markers extends React.Component {
 
   //markers updated when position or map is changed
   componentDidUpdate(prevProps) {
-    if ((this.props.map !== prevProps.map) || (this.props.position !== prevProps.position)) {
+    if ((this.props.map !== prevProps.map) ||
+        (this.props.position !== prevProps.position)) {
       this.componentWillReceiveProps();
     }
   }
 
   componentWillReceiveProps() {
-    if(this.props.map === undefined || this.props.google === undefined || this.props.position === undefined ) {
+    if(this.props.map === undefined ||
+       this.props.google === undefined ||
+       this.props.position === undefined) {
       return null;
     }
     this.renderMarkers();
