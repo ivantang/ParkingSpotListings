@@ -66,7 +66,7 @@ class App extends Component {
         <h1> Parking Space Share </h1>
         <Form
           handleState={this.updateStateFromDB}
-          formInitValue={this.state.formLatLng}
+          formLatLng={this.state.formLatLng}
          />
         <MapContainer
           google={this.props.google}

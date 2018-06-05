@@ -60,17 +60,17 @@ class Form extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="email">Enter your email</label>
+          <label htmlFor="email">Enter your email  </label>
           <input id="email" name="email" type="text" />
 
-          <label htmlFor="x">Enter x</label>
-          <input id="lat" name="lat" type="number" step="0.00000001"/>
-
-          <label htmlFor="y">Enter y</label>
-          <input id="lng" name="lng" type="number" step="0.00000001"/>
-
-          <label htmlFor="rate">How much will your charge per hour?</label>
+          <label htmlFor="rate">How much will your charge per hour?  </label>
           <input id="rate" name="rate" type="text" />
+
+          <label htmlFor="x">Latitude</label>
+          <input id="lat" name="lat" type="number" step="0.0000000000000001" value={this.props.formLatLng.lat}/>
+
+          <label htmlFor="y">Longtitude</label>
+          <input id="lng" name="lng" type="number" step="0.0000000000000001" value={this.props.formLatLng.lng}/>
 
           <button>Send data!</button>
         </form>
