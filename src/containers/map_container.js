@@ -138,7 +138,7 @@ export default class MapContainer extends Component {
 
     const style = {
       width: '100vw',
-      height: '75vh'
+      height: '90vh'
     }
 
     return (
