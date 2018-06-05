@@ -50,14 +50,27 @@ export default class Markers extends React.Component {
       };
       const marker = new google.maps.Marker(pref);
 
+      //attach info window
+
+      const infowindow = new google.maps.InfoWindow({
+        content:  ('<p>Lat: ' + pos.lat + '</p>' +
+                  '<p>Long: ' + pos.lng + '</p>' +
+                  '<p>rate: $' + pos.rate + '/day</p>' +
+                  '<button onclick="this.myFunction()">Purchase</button>')
+      });
+
+      marker.addListener('click', function() {
+        infowindow.open(map,marker);
+      });
+
       markerArray.push(marker);
 
       //create marker events
-      const eventNames = ['click', 'mouseover'];
+      // const eventNames = ['click'];
 
-      eventNames.forEach(iterator => {
-        marker.addListener(iterator, this.handleEvent(iterator));
-      })
+      // eventNames.forEach(iterator => {
+         // marker.addListener(iterator, this.handleEvent(iterator));
+      // })
 
     });
 
@@ -68,6 +81,10 @@ export default class Markers extends React.Component {
       console.log(eventName);
       console.log(event);
     }
+  }
+
+  myFunction(){
+    console.log("Button in info window");
   }
 
   //removing the marker
