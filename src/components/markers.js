@@ -4,11 +4,12 @@ var markerArray = [];
 
 export default class Markers extends React.Component {
 
-  // constructor(props) {
-  //   super(props);
+   constructor(props) {
+     super(props);
   //
   //   this.componentWillUnmount = this.componentWillUnmount.bind(this);
-  // }
+      this.renderMarkers = this.renderMarkers.bind(this);
+   }
 
   //markers updated when position or map is changed
   componentDidUpdate(prevProps) {
@@ -56,7 +57,8 @@ export default class Markers extends React.Component {
         content:  ('<p>Lat: ' + pos.lat + '</p>' +
                   '<p>Long: ' + pos.lng + '</p>' +
                   '<p>rate: $' + pos.rate + '/day</p>' +
-                  '<button onclick="this.myFunction()">Purchase</button>')
+                  //'<button onclick="this.myFunction()">Purchase</button>')
+                  '<button onclick="purchaseParkingSpot()">Purchase</button>')
       });
 
       marker.addListener('click', function() {
@@ -83,10 +85,6 @@ export default class Markers extends React.Component {
     }
   }
 
-  myFunction(){
-    console.log("Button in info window");
-  }
-
   //removing the marker
   removeAllMarkers() {
     if (markerArray) {
@@ -103,6 +101,10 @@ export default class Markers extends React.Component {
     return null;
   }
 
+}
+
+global.purchaseParkingSpot = function purchaseParkingSpot(){
+  console.log("Button in info window");
 }
 
 Markers.propTypes = {
