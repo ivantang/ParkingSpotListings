@@ -58,7 +58,7 @@ export default class Markers extends React.Component {
                   '<p>Long: ' + pos.lng + '</p>' +
                   '<p>rate: $' + pos.rate + '/day</p>' +
                   //'<button onclick="this.myFunction()">Purchase</button>')
-                  '<button onclick="purchaseParkingSpot()">Purchase</button>')
+                  '<button onclick="purchaseParkingSpot(); ">Purchase</button>')
       });
 
       marker.addListener('click', function() {
@@ -105,6 +105,9 @@ export default class Markers extends React.Component {
 
 global.purchaseParkingSpot = function purchaseParkingSpot(){
   console.log("Button in info window");
+  console.log(this);
+  //set entry in db for isOccupied to true
+  //rerender markers
 }
 
 Markers.propTypes = {
