@@ -9,10 +9,11 @@ import { GoogleApiWrapper } from 'google-maps-react';
 import MapContainer from '../containers/map_container';
 import Form from './form';
 import Markers from './markers';
+import InfoWindow from './infowindow';
 const DB_URL = 'http://localhost:4000/locations'
 
 
-var debug = 1;
+var debug = 0;
 
 class App extends Component {
   constructor(props) {
@@ -20,9 +21,14 @@ class App extends Component {
 
     this.handleStateFormLatLng = this.handleStateFormLatLng.bind(this);
     this.updateStateFromDB = this.updateStateFromDB.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.hideInfoWindow = this.hideInfoWindow.bind(this);
 
     this.state = {
+      //form
       formLatLng: {"lat": 0, "lng": 0}, //this is for the latlnt in form field
+
+      //markers
       userData: [
         {
           //"_id": "",
@@ -33,7 +39,12 @@ class App extends Component {
           //"lat": 0,
           //"__v": 0
         }
-      ]
+      ],
+
+      //infowindow
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
     }
   }
 
@@ -45,7 +56,6 @@ class App extends Component {
 
   handleStateFormLatLng(data) {
     this.setState({formLatLng: data});
-    console.log(this.state.formLatLng);
   }
 
   updateStateFromDB(){
@@ -56,6 +66,22 @@ class App extends Component {
             this.setState({userData : data});
           })
       });
+  }
+
+  onMarkerClick(props, marker, userInformation) {
+      this.setState({
+        selectedPlace: props,
+        activeMarker: marker,
+        userInformation: userInformation,
+        showingInfoWindow: true
+      });
+  }
+
+  hideInfoWindow(data) {
+    this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+    });
   }
 
   render() {
@@ -70,9 +96,17 @@ class App extends Component {
          />
         <MapContainer
           google={this.props.google}
-          formLatLng={this.handleStateFormLatLng}>
-          <Markers />
-          <Markers position={this.state.userData} />
+          formLatLng={this.handleStateFormLatLng}
+          hideInfoWindow={this.hideInfoWindow}>
+          <Markers
+            position={this.state.userData}
+            onMarkerClick={this.onMarkerClick}/>
+          <InfoWindow onClick={()=>console.log(this)}
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}
+            selectedPlace={this.state.selectedPlace}
+            userInformation={this.state.userInformation}>
+          </InfoWindow>
         </MapContainer>
       </div>
     );

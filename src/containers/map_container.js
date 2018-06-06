@@ -111,6 +111,7 @@ export default class MapContainer extends Component {
       if (eventName === 'click') {
         let data = {"lat": event.latLng.lat(), "lng":event.latLng.lng()}
         //console.log(data);
+        this.props.hideInfoWindow(data);
 
         this.props.formLatLng(data);
       }

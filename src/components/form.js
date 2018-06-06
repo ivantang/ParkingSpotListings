@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import MapContainer from '../containers/map_container';
 
-var debug = 1;
+var debug = 0;
 
 
 // db variables
