@@ -1,11 +1,13 @@
 //parent component
 
 import React, { Component } from 'react';
-import '../style/App.css';
+
+import styled from 'styled-components';
 
 // Google Maps API Wrapper from google-maps-react component
 import { GoogleApiWrapper } from 'google-maps-react';
 
+//local files and components
 import MapContainer from '../containers/map_container';
 import Form from './form';
 import Markers from './markers';
@@ -84,16 +86,21 @@ class App extends Component {
     });
   }
 
+
   render() {
     if(debug) console.log("app render()");
 
     return (
       <div className="App">
-        <h1> Parking Space Share </h1>
-        <Form
-          handleState={this.updateStateFromDB}
-          formLatLng={this.state.formLatLng}
-         />
+        <SideBar>
+          <Title>
+            Parking Space Share
+          </Title>
+          <Form
+            handleState={this.updateStateFromDB}
+            formLatLng={this.state.formLatLng}
+           />
+        </SideBar>
         <MapContainer
           google={this.props.google}
           formLatLng={this.handleStateFormLatLng}
@@ -112,6 +119,25 @@ class App extends Component {
     );
   }
 }
+
+/* STYLING */
+
+const Title = styled.h1`
+  text-align: center;
+  height: 25px;
+`
+
+const SideBar = styled.section`
+  background-color: grey;
+  color: white;
+  height: 100%;
+  width: 200px;
+  left: 0;
+  top: 0;
+  position: fixed;
+  z-index: 1;
+  padding-top: 20px;
+`;
 
 //console.log(GoogleApiWrapper);
 

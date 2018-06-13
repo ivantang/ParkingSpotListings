@@ -138,8 +138,9 @@ export default class MapContainer extends Component {
     if(debug) console.log("map_container render()");
 
     const style = {
-      width: '100vw',
-      height: '90vh'
+      position: 'absolute',
+      width: '100%',
+      height: '100%'
     }
 
     return (
