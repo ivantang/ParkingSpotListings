@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import MapContainer from '../containers/map_container';
 
+import styled from 'styled-components';
+
 var debug = 0;
 
 
@@ -60,24 +62,42 @@ class Form extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="email">Enter your email  </label>
-          <input id="email" name="email" type="text" />
+          <Fields>
+            <div>
+              <label htmlFor="email">Enter your email </label>
+              <input id="email" name="email" type="text" />
+              <span>{"\n"}</span>
 
-          <label htmlFor="rate">How much will your charge per hour?  </label>
-          <input id="rate" name="rate" type="text" />
+            </div>
 
-          <label htmlFor="x">Latitude</label>
-          <input id="lat" name="lat" type="number" step="0.0000000000000001" value={this.props.formLatLng.lat}/>
+            {"\n"}
 
-          <label htmlFor="y">Longtitude</label>
-          <input id="lng" name="lng" type="number" step="0.0000000000000001" value={this.props.formLatLng.lng}/>
+            <div>
+              <label htmlFor="rate">How much will your charge per hour?  </label>
+              <input id="rate" name="rate" type="text" />
+            </div>
 
-          <button>Send data!</button>
+            <div>
+              <label htmlFor="x">Latitude</label>
+              <input id="lat" name="lat" type="number" step="0.0000000000000001" value={this.props.formLatLng.lat}/>
+            </div>
+
+            <div>
+              <label htmlFor="y">Longtitude</label>
+              <input id="lng" name="lng" type="number" step="0.0000000000000001" value={this.props.formLatLng.lng}/>
+            </div>
+
+            <button>Send data!</button>
+          </Fields>
         </form>
     </div>
     );
   }
 };
+
+const Fields = styled.section`
+  text-align: center;
+`
 
 function stringifyFormData(formData) {
   const data = {};

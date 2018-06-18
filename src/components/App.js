@@ -89,7 +89,7 @@ class App extends Component {
 
   render() {
     if(debug) console.log("app render()");
-
+    console.log(this);
     return (
       <div className="App">
         <SideBar>
@@ -112,7 +112,8 @@ class App extends Component {
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             selectedPlace={this.state.selectedPlace}
-            userInformation={this.state.userInformation}>
+            userInformation={this.state.userInformation}
+            removeMarker={Markers.removeMarker}>
           </InfoWindow>
         </MapContainer>
       </div>
@@ -131,7 +132,7 @@ const SideBar = styled.section`
   background-color: grey;
   color: white;
   height: 100%;
-  width: 200px;
+  width: 450px;
   left: 0;
   top: 0;
   position: fixed;

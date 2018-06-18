@@ -72,6 +72,12 @@ export default class Markers extends React.Component {
     }
   }
 
+  removeMarker(marker) {
+    if (marker) {
+      marker.setMap(null);
+    }
+  }
+
   render() {
     //we dont need to interact with DOM element
     //only need to hand contructed virtual DOM bk to react

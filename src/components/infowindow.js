@@ -33,6 +33,7 @@ export default class InfoWindow extends React.Component {
     var purchaseSpot = () => {
       console.log(this);
 
+      this.props.removeMarker(this.props.marker);
       return 0;
     };
 
